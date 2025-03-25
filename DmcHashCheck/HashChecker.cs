@@ -356,12 +356,42 @@ namespace DmcHashCheck
                     }
                 }
             },
+            new FirmwareInfo
+            {
+                Name = "Digimon Color Monster Hunter 20th Edition",
+                IdentifierFunction = (br) =>
+                {
+                    br.BaseStream.Seek(0xb474, SeekOrigin.Begin);
+                    return br.ReadUInt16() == 0x9645 && br.ReadUInt16() == 0xfe00 && br.ReadUInt16() == 0x990c && br.ReadUInt16() == 0x0cfe && br.ReadUInt16() == 0xd6e4;
+                },
+                Regions =
+                [
+                    new CheckRegion
+                    {
+                        StartOffset = 0,
+                        EndOffset = 0x3fffff,
+                        Hash = [0x12, 0x60, 0x47, 0xb6, 0x3f, 0xda, 0x7c, 0x2e, 0xff, 0x8b, 0x8c, 0xc4, 0x53, 0xd8, 0x84, 0x9c, 0x74, 0xeb, 0xe3, 0xf0, 0xaf, 0x66, 0xb9, 0xe6, 0x7e, 0x03, 0xf2, 0xfe, 0xca, 0x33, 0xb9, 0x85]
+                    },
+                    new CheckRegion
+                    {
+                        StartOffset = 0x400000,
+                        EndOffset = 0x7fcfff,
+                        Hash = [0xdd, 0xa0, 0x51, 0x42, 0xbb, 0x4f, 0x77, 0x76, 0xa0, 0x87, 0xe3, 0x1b, 0x1d, 0x1c, 0x4a, 0x2e, 0x33, 0x89, 0xfa, 0x84, 0xf7, 0x1e, 0x5d, 0x72, 0xd0, 0xb5, 0x89, 0x72, 0x74, 0x36, 0x0f, 0x30]
+                    },
+                    new CheckRegion
+                    {
+                        StartOffset = 0x7ff000,
+                        EndOffset = 0x7fffff,
+                        Hash = [0x2d, 0x15, 0xdd, 0xba, 0xb0, 0xd8, 0x57, 0x24, 0x6c, 0xb6, 0x5c, 0xf5, 0xaa, 0xf1, 0x9f, 0xd5, 0xa3, 0x17, 0xf6, 0x01, 0xb2, 0x32, 0x59, 0x14, 0x91, 0xa4, 0x25, 0xb9, 0xca, 0x7d, 0x01, 0xdd]
+                    }
+                ]
+            },
         }.ToImmutableList();
 
         public static void CheckFirmware(Stream stream)
         {
             BinaryReader br = new BinaryReader(stream);
-            FirmwareInfo info = null;
+            FirmwareInfo? info = null;
             foreach (var i in FIRMWARES)
             {
                 if (i.IdentifierFunction(br))

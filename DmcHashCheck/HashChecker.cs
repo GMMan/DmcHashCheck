@@ -478,7 +478,7 @@ namespace DmcHashCheck
             },
             new FirmwareInfo
             {
-                Name = "Digimon Color Xros Wars 15th Edition",
+                Name = "Digimon Color Digimon Xros Wars 15th Edition",
                 IdentifierFunction = (br) =>
                 {
                     br.BaseStream.Seek(0xf78e, SeekOrigin.Begin);
